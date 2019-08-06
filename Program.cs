@@ -17,7 +17,7 @@ namespace _433_influx
 
             var process = new Process();
             process.StartInfo.FileName = "/usr/local/bin/rtl_433";
-            process.StartInfo.Arguments = "-F json -M protocol -M newmodel";
+            process.StartInfo.Arguments = "-F json -M newmodel";
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.CreateNoWindow = true;
             process.StartInfo.RedirectStandardOutput = true;
@@ -40,7 +40,7 @@ namespace _433_influx
             fields.Remove("model");
 
             var payload = new LineProtocolPayload();
-            payload.Add(new LineProtocolPoint(measurement, fields));
+            payload.Add(new LineProtocolPoint(measurement.Replace("-", "_"), fields));
             lineProtocolClient.WriteAsync(payload).Wait();
         }
     }
